@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  node1:
+    build: .
+    command: ["-bind", "node1", "-port", "7946", "-grpc", ":50051", "-udp", ":6000"]
+    networks:
+      rlnet:
+        aliases:
+          - node1
+    cap_add:
+      - NET_ADMIN
+
+  node2:
+    build: .
+    command: ["-bind", "node2", "-port", "7946", "-grpc", ":50051", "-udp", ":6000", "-join", "node1:7946"]
+    depends_on:
+      - node1
+    networks:
+      rlnet:
+        aliases:
+          - node2
+    cap_add:
+      - NET_ADMIN
+
+  node3:
+    build: .
+    command: ["-bind", "node3", "-port", "7946", "-grpc", ":50051", "-udp", ":6000", "-join", "node1:7946"]
+    depends_on:
+      - node1
+    networks:
+      rlnet:
+        aliases:
+          - node3
+    cap_add:
+      - NET_ADMIN
+
+  node4:
+    build: .
+    command: ["-bind", "node4", "-port", "7946", "-grpc", ":50051", "-udp", ":6000", "-join", "node1:7946"]
+    depends_on:
+      - node1
+    networks:
+      rlnet:
+        aliases:
+          - node4
+    cap_add:
+      - NET_ADMIN
+
+  node5:
+    build: .
+    command: ["-bind", "node5", "-port", "7946", "-grpc", ":50051", "-udp", ":6000", "-join", "node1:7946"]
+    depends_on:
+      - node1
+    networks:
+      rlnet:
+        aliases:
+          - node5
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  rlnet:
+    driver: bridge

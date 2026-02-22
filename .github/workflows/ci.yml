@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+
+    - name: Test Core engine and Gossip
+      run: go test -v -race -bench=. ./...
+
+    - name: Run Jepsen-style Integration Tests
+      run: |
+        chmod +x scripts/jepsen_test.sh
+        ./scripts/jepsen_test.sh

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package ratelimit.v1;
+
+option go_package = "github.com/user/rate-limiter/api/v1;ratelimitpb";
+
+service RateLimiter {
+  // AllowRequest checks if a given client ID is allowed to make a request.
+  rpc AllowRequest(AllowRequestArgs) returns (AllowRequestResponse) {}
+}
+
+message AllowRequestArgs {
+  string client_id = 1;
+}
+
+message AllowRequestResponse {
+  bool allowed = 1;
+}
